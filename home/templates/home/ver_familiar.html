@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver familiares</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="list--container">
+        <p>Listado de familiares: </p><br>
+        <ol>
+            {% for familiar in familiares %}
+            <li>
+                {{familiar.nombre}} {{familiar.apellido}}
+                <p>Edad: {{familiar.edad}}</p>
+                <p>Creacion: {{familiar.creacion}}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+</html>

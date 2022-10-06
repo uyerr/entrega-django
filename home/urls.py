@@ -1,0 +1,8 @@
+from django.urls import path
+from home import views
+
+urlpatterns = [
+    path('ver-familiar', views.ver_familiar, name="ver_familiar"),
+    path('crear-familiar/<str:nombre>/<str:apellido>/', views.add_familiar, name="add_familiar"),
+]
+ 
