@@ -14,7 +14,7 @@
         <ol>
             {% for familiar in familiares %}
             <li>
-                {{familiar.nombre}} {{familiar.apellido}}
+                {{familiar.nombre.capitalize}} {{familiar.apellido.capitalize}}
                 <p>Edad: {{familiar.edad}}</p>
                 <p>Creacion: {{familiar.creacion}}</p>
             </li>

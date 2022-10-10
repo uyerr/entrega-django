@@ -2,20 +2,20 @@ import random
 from datetime import datetime
 from django.http import HttpResponse
 from django.template import Context, Template, loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from home.models import Familiar
 
-def add_familiar(request, nombre, apellido):
+def add_familiar(request):
     
-    familiar = Familiar(nombre=nombre, apellido=apellido, edad=random.randrange(1, 99), creacion=datetime.now())
-    familiar.save()
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        apellido = request.POST.get('apellido')
+        familiar = Familiar(nombre=nombre, apellido=apellido, edad=random.randrange(1, 99), creacion=datetime.now())
+        familiar.save()
+        
+        return redirect('ver_familiar')
     
-    # template = loader.get_template('add_familiar.html')
-    # render_template = template.render({'familiar': familiar,})
-    
-    # return HttpResponse(render_template)
-    
-    return render(request, 'home/add_familiar.html', {'familiar': familiar,})
+    return render(request, 'add_familiar.html', {})
 
 def ver_familiar(request):
     
@@ -26,4 +26,4 @@ def ver_familiar(request):
     
     # return HttpResponse(render_template)
     
-    return render(request, 'home/ver_familiar.html', {'familiares': familiares})
+    return render(request, 'ver_familiar.html', {'familiares': familiares})
