@@ -4,26 +4,35 @@ from django.http import HttpResponse
 from django.template import Context, Template, loader
 from django.shortcuts import render, redirect
 from home.models import Familiar
+from home.forms import HumanoFormulario, BusquedaFormulario
 
 def add_familiar(request):
     
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         apellido = request.POST.get('apellido')
-        familiar = Familiar(nombre=nombre, apellido=apellido, edad=random.randrange(1, 99), creacion=datetime.now())
+        edad = request.POST.get('edad')
+        creacion = request.POST.get('creacion')
+        familiar = Familiar(nombre=nombre, apellido=apellido, edad=edad, creacion=creacion)
         familiar.save()
         
         return redirect('ver_familiar')
     
-    return render(request, 'add_familiar.html', {})
+    formulario = HumanoFormulario()
+    
+    return render(request, 'add_familiar.html', {'formulario': formulario})
+
+
 
 def ver_familiar(request):
     
-    familiares = Familiar.objects.all()
+    nombre = request.GET.get('nombre')
     
-    # template = loader.get_template('ver_familiar.html')
-    # render_template = template.render({'familiares': familiares})
+    if nombre:
+        familiares = Familiar.objects.filter(nombre__icontains=nombre)
+    else:
+        familiares = Familiar.objects.all()
     
-    # return HttpResponse(render_template)
+    formulario = BusquedaFormulario()
     
-    return render(request, 'ver_familiar.html', {'familiares': familiares})
+    return render(request, 'ver_familiar.html', {'familiares': familiares, 'formulario' : formulario})

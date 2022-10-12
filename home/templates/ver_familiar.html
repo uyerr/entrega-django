@@ -11,6 +11,11 @@
 <body>
     <div class="list--container">
         <p>Listado de familiares: </p><br>
+        <form action={% url 'ver_familiar' %} method="GET" class="form--wrapper">
+            {{formulario}}
+            <input type="submit" value="Buscar" class="input--submit">
+        </form>
+        <br>
         <ol>
             {% for familiar in familiares %}
             <li>

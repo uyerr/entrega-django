@@ -9,18 +9,9 @@
 <body>
     <form action={% url 'add_familiar' %} method="POST" class="form--wrapper">
         {% csrf_token %}
-        <div class="form--name__container">
-            <p class="form--name">
-                Nombre:
-                <input type="text" name="nombre" placeholder="Nombre" class="input--name">
-            </p>
-        </div>
-        <div class="form--surname__container">
-            <p class="form--surname">
-                Apellido:
-                <input type="text" name="apellido" placeholder="Apellido" class="input--surname">
-            </p>
-        </div>
+        <table class="form--table">
+            {{formulario}}
+        </table>
         <input type="submit" value="Create" class="input--submit">
     </form>
     <p>Clic <a href={% url 'ver_familiar' %}>aqui</a> para ver el listado de personas</p>
