@@ -36,3 +36,7 @@ def ver_familiar(request):
     formulario = BusquedaFormulario()
     
     return render(request, 'ver_familiar.html', {'familiares': familiares, 'formulario' : formulario})
+
+def home(request):
+    
+    return render(request, 'home.html')
