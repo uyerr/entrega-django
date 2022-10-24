@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Mascota</title>
+</head>
+<body>
+    <form action={% url 'crear_mascota' %} method="POST" class="form--wrapper">
+        {% csrf_token %}
+        <table class="form--table">
+            {{formulario}}
+        </table>
+        <input type="submit" value="Create" class="input--submit">
+    </form>
+    <p>Clic <a href={% url 'ver_mascotas' %}>aqui</a> para ver el listado de mascotas</p>
+</body>
+</html>

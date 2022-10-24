@@ -9,14 +9,23 @@ from home.forms import HumanoFormulario, BusquedaFormulario
 def add_familiar(request):
     
     if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        apellido = request.POST.get('apellido')
-        edad = request.POST.get('edad')
-        creacion = request.POST.get('creacion')
-        familiar = Familiar(nombre=nombre, apellido=apellido, edad=edad, creacion=creacion)
-        familiar.save()
         
-        return redirect('ver_familiar')
+        formulario = HumanoFormulario(request.POST)
+        
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            
+            nombre = data['nombre']
+            apellido = data['apellido']
+            edad = data['edad']
+            creacion = data['creacion']
+            if not creacion:
+                creacion = datetime.now()
+            
+            familiar = Familiar(nombre=nombre, apellido=apellido, edad=edad, creacion=creacion)
+            familiar.save()
+        
+            return redirect('ver_familiar')
     
     formulario = HumanoFormulario()
     

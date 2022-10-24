@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Mascotas</title>
+</head>
+<body>
+    <div class="list--container">
+        <p>Listado de Mascotas: </p><br>
+        <form action={% url 'ver_mascotas' %} method="GET" class="form--wrapper">
+            {{formulario}}
+            <input type="submit" value="Buscar" class="input--submit">
+        </form>
+        <br>
+        <ol>
+            {% for mascota in mascotas %}
+            <li>
+                <p>Nombre: {{mascota.nombre.capitalize}}</p>
+                <p>Especie: {{mascota.especie}}</p>
+                <p>Edad: {{mascota.edad}}</p>
+                <p>Nacimiento: {{mascota.nacimiento}}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+</html>
