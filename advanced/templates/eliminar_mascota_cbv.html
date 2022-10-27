@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Mascota</title>
+</head>
+<body>
+    <form action={% url 'eliminar_mascota' mascota.id %} method="POST" class="form--wrapper">
+        {% csrf_token %}
+        <p>Confirmar eliminacion de la mascota</p>
+        <input type="submit" value="Eliminar" class="input--submit">
+    </form>
+</body>
+</html>

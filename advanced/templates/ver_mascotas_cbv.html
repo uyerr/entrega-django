@@ -14,15 +14,14 @@
             {{formulario}}
             <input type="submit" value="Buscar" class="input--submit">
         </form>
-        <br>
-        {% if mascotas %}
+        
+        {% if object_list %}
         <ol>
-            {% for mascota in mascotas %}
+            {% for mascota in object_list %}
             <li>
-                <p>Nombre: {{mascota.nombre.capitalize}}</p>
-                <p>Especie: {{mascota.especie}}</p>
-                <p>Edad: {{mascota.edad}}</p>
-                <p>Nacimiento: {{mascota.nacimiento}}</p>
+                <p>Nombre: {{mascota.nombre.capitalize}} - Especie: {{mascota.especie}}</p>
+                <p>Edad: {{mascota.edad}} - Nacimiento: {{mascota.nacimiento}}</p>
+                
                 <button><a href={% url 'editar_mascota' mascota.id %}>Editar</a></button>
                 <button><a href={% url 'eliminar_mascota' mascota.id %}>Eliminar</a></button>
             </li>
