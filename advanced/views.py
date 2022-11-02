@@ -3,6 +3,9 @@ from advanced.models import Mascota
 from advanced.forms import MascotaFormulario, BusquedaFormulario
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def ver_mascotas(request):
@@ -18,6 +21,7 @@ def ver_mascotas(request):
     
     return render(request, 'ver_mascotas.html', {'mascotas': mascotas, 'formulario' : formulario})
 
+@login_required
 def crear_mascota(request):
     
     if request.method == 'POST':
@@ -81,23 +85,23 @@ def eliminar_mascota(request, id):
     return redirect('ver_mascotas')
 
 
-class ListaMascotas(ListView):
-    model = Mascota
-    template_name = 'ver_mascotas_cbv.html'
+# class ListaMascotas(ListView):
+#     model = Mascota
+#     template_name = 'ver_mascotas_cbv.html'
 
-class CrearMascota(CreateView):
-    model = Mascota
-    success_url = '/mascotas/'
-    template_name = 'crear_mascota_cbv.html'
-    fields = ['nombre', 'especie', 'edad', 'nacimiento']
+# class CrearMascota(CreateView):
+#     model = Mascota
+#     success_url = '/mascotas/'
+#     template_name = 'crear_mascota_cbv.html'
+#     fields = ['nombre', 'especie', 'edad', 'nacimiento']
     
-class EditarMascota(UpdateView):
+class EditarMascota(LoginRequiredMixin, UpdateView):
     model = Mascota
     success_url = '/mascotas/'
     template_name = 'crear_mascota_cbv.html'
     fields = ['nombre', 'especie', 'edad', 'nacimiento']
 
-class EliminarMascota(DeleteView):
+class EliminarMascota(LoginRequiredMixin, DeleteView):
     model = Mascota
     success_url = '/mascotas/'
     template_name = 'eliminar_mascota_cbv.html'
