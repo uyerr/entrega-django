@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login as log
-from accounts.forms import RegisterForm
+from accounts.forms import RegisterForm, ProfileEditForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
+
 
 # Create your views here.
 def login(request):
@@ -33,3 +37,45 @@ def register(request):
     
     
     return render(request, 'register.html', {'formulario': formulario})
+
+
+@login_required
+def profile(request):
+    
+    return render(request, 'profile.html', {})
+
+
+@login_required
+def edit_profile(request):
+    
+    user = request.user
+    
+    if request.method == 'POST':
+       formulario = ProfileEditForm(request.POST)
+       
+       if formulario.is_valid():
+           data = formulario.cleaned_data
+           
+           user.first_name = data['first_name']
+           user.last_name = data['last_name']
+           user.email = data['email']
+           
+           request.user.save()
+           
+           return redirect('profile')
+    else:   
+        formulario = ProfileEditForm(
+            initial={
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+        )
+    
+    return render(request, 'edit_profile.html', {'formulario': formulario})
+
+
+class password(LoginRequiredMixin, PasswordChangeView):
+    
+    template_name = 'password.html'
+    success_url = 'profile/'

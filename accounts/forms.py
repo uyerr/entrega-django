@@ -13,3 +13,9 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
         help_texts = {key: '' for key in fields}
+        
+class ProfileEditForm(forms.Form):
+    
+    first_name = forms.CharField(label='Nombre')
+    last_name = forms.CharField(label='Apellido')
+    email = forms.CharField()
