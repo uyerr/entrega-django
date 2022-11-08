@@ -5,6 +5,7 @@ from accounts.forms import RegisterForm, ProfileEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
+from accounts.models import ExtensionUsuario
 
 
 # Create your views here.
@@ -15,6 +16,7 @@ def login(request):
         if formulario.is_valid():
             user = formulario.get_user()
             log(request, user)
+            extensionUsuario, es_nuevo = ExtensionUsuario.objects.get_or_create(user=request.user)
             
             return redirect('home')
     else:
@@ -28,6 +30,7 @@ def register(request):
     
     if request.method == 'POST':
         formulario = RegisterForm(request.POST)
+        
         if formulario.is_valid():
             formulario.save()
         
@@ -42,6 +45,8 @@ def register(request):
 @login_required
 def profile(request):
     
+    extensionUsuario, es_nuevo = ExtensionUsuario.objects.get_or_create(user=request.user)
+    
     return render(request, 'profile.html', {})
 
 
@@ -51,7 +56,7 @@ def edit_profile(request):
     user = request.user
     
     if request.method == 'POST':
-       formulario = ProfileEditForm(request.POST)
+       formulario = ProfileEditForm(request.POST, request.FILES)
        
        if formulario.is_valid():
            data = formulario.cleaned_data
@@ -59,7 +64,9 @@ def edit_profile(request):
            user.first_name = data['first_name']
            user.last_name = data['last_name']
            user.email = data['email']
+           user.extensionusuario.avatar = data['avatar']
            
+           user.extensionusuario.save()
            request.user.save()
            
            return redirect('profile')
@@ -68,7 +75,8 @@ def edit_profile(request):
             initial={
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'email': user.email
+                'email': user.email,
+                'avatar': user.extensionusuario.avatar,
             }
         )
     

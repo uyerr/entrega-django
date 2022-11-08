@@ -8,6 +8,13 @@
 </head>
 <body>
     <h1>Perfil de {{user.username.capitalize}}</h1>
+    <div>
+        {% if  request.user.extensionusuario.avatar %}
+        <img src={{request.user.extensionusuario.avatar.url}} alt="">
+        {% else %}
+        <p>Sin foto de perfil</p>
+        {% endif %}
+    </div>
     <ul>
         <li>Nombre: {{user.first_name.capitalize}}</li>
         <li>Apellido: {{user.last_name.capitalize}}</li>

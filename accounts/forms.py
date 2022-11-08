@@ -19,3 +19,4 @@ class ProfileEditForm(forms.Form):
     first_name = forms.CharField(label='Nombre')
     last_name = forms.CharField(label='Apellido')
     email = forms.CharField()
+    avatar = forms.ImageField(required=False, widget=forms.FileInput)

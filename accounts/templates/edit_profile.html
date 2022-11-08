@@ -7,7 +7,7 @@
     <title>Edit Profile</title>
 </head>
 <body>
-    <form action={% url 'edit_profile' %} method="POST" class="form--wrapper">
+    <form action={% url 'edit_profile' %} method="POST" class="form--wrapper" enctype="multipart/form-data">
         {% csrf_token %}
         <table class="form--table">
             {{formulario}}
