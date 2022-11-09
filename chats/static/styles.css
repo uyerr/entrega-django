@@ -1,0 +1,35 @@
+.sent-message {
+    background-color: #f3f3f3;
+    margin-top: 20px;
+    border-radius: 30px;
+    padding: 10px 25px;
+    width: 25%;
+}
+
+.received-message {
+    background-color: rgb(1, 196, 255);
+    color: #fff;
+    border-radius: 30px;
+    padding: 10px 25px;
+    margin-top: 20px;
+    width: 25%;
+    float: right;
+}
+
+.card {
+    padding-left: 10%;
+    margin-bottom: 20px;
+    background-color: violet;
+    height: 50px;
+    font-size: 2rem;
+}
+
+.message-submit {
+    position: absolute;
+    background-color: cornflowerblue;
+    border-radius: 30px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    bottom: 10%;
+    width: 100vw;
+}
