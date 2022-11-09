@@ -4,10 +4,11 @@ from .models import ThreadModel, MessageModel
 from django.db.models import Q
 from .forms import ThreadForm, MessageForm
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-class ListThreads(View):
+class ListThreads(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         threads = ThreadModel.objects.filter(Q(user=request.user.id) | Q(receiver=request.user.id))
         
@@ -17,7 +18,7 @@ class ListThreads(View):
         
         return render(request, 'inbox.html', context)
     
-class CreateThread(View):
+class CreateThread(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         form = ThreadForm()
         
@@ -55,7 +56,7 @@ class CreateThread(View):
         except:
             return redirect('create_thread')
         
-class ThreadView(View):
+class ThreadView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         form = MessageForm()
         thread = ThreadModel.objects.get(pk=pk)
@@ -69,7 +70,7 @@ class ThreadView(View):
         
         return render(request, 'thread.html', context)
     
-class CreateMessage(View):
+class CreateMessage(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         
         thread = ThreadModel.objects.get(pk=pk)
