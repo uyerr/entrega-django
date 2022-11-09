@@ -23,11 +23,20 @@
 
         <div class="row justify-content-center mt-3 mb-5">
             <div class="col-md-5 col-sm-12">
+                
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <p>Chat con: </p>
+                    <p>Chatear con: </p>
                     {{form}}
-                    <p></p>
+                    <p>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </p>
                     <div class="d-grid gap-2">
                         <button class="btn btn-success mt-3">Continuar</button>
                     </div>

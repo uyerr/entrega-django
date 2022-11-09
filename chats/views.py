@@ -5,6 +5,7 @@ from django.db.models import Q
 from .forms import ThreadForm, MessageForm
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 # Create your views here.
 
@@ -54,6 +55,7 @@ class CreateThread(LoginRequiredMixin, View):
 
                 return redirect('thread', pk=thread.pk)
         except:
+            messages.error(request, 'El usuario no existe')
             return redirect('create_thread')
         
 class ThreadView(LoginRequiredMixin, View):
