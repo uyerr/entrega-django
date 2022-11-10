@@ -1,5 +1,4 @@
 from django.contrib import admin
-from home import models
 from home.models import Familiar
 
 # Register your models here.
